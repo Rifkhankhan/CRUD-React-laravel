@@ -4,10 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 
-class AuthController extends Controller
+class AuthController extends Controller implements HasMiddleware
 {
+
+
+      public static function middleware()
+     {
+        return [
+            new Middleware('auth:sanctum',except:['index','show'])
+        ];
+     }
+
+
     public function register(Request $request) {
 
         $feilds = $request->validate([
