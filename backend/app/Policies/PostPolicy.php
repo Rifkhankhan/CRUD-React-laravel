@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-
+use Illuminate\Auth\Access\Response;
 class PostPolicy
 {
     use HandlesAuthorization;
@@ -68,6 +68,15 @@ class PostPolicy
         //
     }
 
+
+    // owner can only delete the post
+
+    public function modify(User $user, Post $post)
+        {
+            return $user->id === $post->user_id
+                ? Response::allow()
+                : Response::deny("You don't own this post");
+        }
     /**
      * Determine whether the user can restore the model.
      *

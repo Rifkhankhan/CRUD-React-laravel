@@ -12,4 +12,8 @@ class Post extends Model
         'body'
     ];
     use HasFactory;
+
+    public function user(){
+        return $this->belongsTo(Post::class);
+    }
 }
